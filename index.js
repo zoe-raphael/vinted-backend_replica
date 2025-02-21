@@ -1,16 +1,21 @@
 require("dotenv").config();
+const express = require("express");
+const app = express();
+app.use(express.json());
 
 const cors = require("cors");
-app.use(cors());
 
-const express = require("express");
 const mongoose = require("mongoose");
 
-const userRoutes = require("./routes/user");
-const offerRoutes = require("./routes/offer", "./vinted/offers");
+const userRoutes = require("./routes/user"); //, "./routes/user/signup", "./routes/user/login"
+const offerRoutes = require("./routes/offer"); //, "./routes/offers", "./routes/offer/publish", "./routes/offers/:id"
+
+app.use(userRoutes);
+app.use(offerRoutes);
 
 const cloudinary = require("cloudinary").v2;
 
+app.use(cors());
 mongoose.connect(process.env.MONGODB_URI);
 
 cloudinary.config({
@@ -18,11 +23,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-const app = express();
-app.use(express.json());
-app.use(userRoutes);
-app.use(offerRoutes);
 
 const convertToBase64 = (file) => {
   return `data:${file.mimetype};base64,${file.data.toString("base64")}`;
