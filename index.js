@@ -16,7 +16,7 @@ app.use(offerRoutes);
 const cloudinary = require("cloudinary").v2;
 
 app.use(cors());
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.PORT);
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
