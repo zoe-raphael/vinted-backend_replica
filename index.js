@@ -32,7 +32,7 @@ const convertToBase64 = (file) => {
 const isAuthenticated = require("./middlewares/isAuthenticated");
 
 // J'utilise mon middleware sur les route que je veux réserver aux users authentifiés
-app.get("/", isAuthenticated, (req, res) => {
+app.get("/user", isAuthenticated, (req, res) => {
   // console.log(req.coucou);
 
   res.json({ message: "Welcome on my cours sur cloudinary server" });
